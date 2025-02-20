@@ -12,6 +12,7 @@ import Login from './components/Login';
 import AuthProvider from './provider/AuthProvider';
 import Tasks from './components/Tasks';
 import AddTaskForm from './components/AddTaskForm';
+import TasksUpdate from './components/TasksUpdate';
 
 const router = createBrowserRouter([
   {
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
       {
         path: '/tasks',
         element: <Tasks></Tasks>
+      },
+      {
+        path: '/tasks/update/:id',
+        element: <TasksUpdate></TasksUpdate>
       },
       {
         path: '/addTask',

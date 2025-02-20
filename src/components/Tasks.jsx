@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { FaClipboardList, FaSpinner, FaCheckCircle } from "react-icons/fa";
+import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const Tasks = () => {
@@ -10,15 +11,6 @@ const Tasks = () => {
         axios.get("http://localhost:5000/tasks")
             .then(data => setTasks(data?.data));
     }, []);
-
-    const handleUpdate = (id, updatedTask) => {
-        axios.put(`http://localhost:5000/tasks/${id}`, updatedTask)
-            .then(response => {
-                setTasks(tasks.map(task => (task._id === id ? response.data : task)));
-            })
-            .catch(error => console.error("Error updating task:", error));
-    };
-
     const handleDelete = (id) => {
         Swal.fire({
             title: "Are you sure?",
@@ -62,9 +54,11 @@ const Tasks = () => {
                         <div key={task._id} className="bg-white p-4 rounded-lg shadow-md mb-3 border border-gray-200 hover:shadow-xl transition">
                             <h3 className="font-semibold text-gray-800 text-lg">{task.title}</h3>
                             <p className="text-gray-600 text-sm mb-2">{task.description}</p>
-                            <button onClick={() => handleUpdate(task._id, { title: "Updated Title" })} className="bg-blue-500 text-white px-3 py-1 rounded mr-2">
-                                Update
-                            </button>
+                            <Link to={`/tasks/update/${task._id}`}>
+                                <button className="bg-blue-500 text-white px-3 py-1 rounded mr-2">
+                                    Update
+                                </button>
+                            </Link>
 
                             {/* Delete Button */}
                             <button onClick={() => handleDelete(task._id)} className="bg-red-500 text-white px-3 py-1 rounded">
@@ -82,7 +76,15 @@ const Tasks = () => {
                     {tasks.filter(task => task.category === "In Progress").map(task => (
                         <div key={task._id} className="bg-white p-4 rounded-lg shadow-md mb-3 border border-blue-200 hover:shadow-xl transition">
                             <h3 className="font-semibold text-blue-800 text-lg">{task.title}</h3>
-                            <p className="text-gray-600 text-sm">{task.description}</p>
+                            <p className="text-gray-600 text-sm mb-2">{task.description}</p>
+                            <button onClick={() => handleDelete(task._id)} className="bg-red-500 text-white px-3 py-1 rounded mr-2">
+                                Delete
+                            </button>
+                            <Link to={`/tasks/update/${task._id}`}>
+                                <button className="bg-blue-500 text-white px-3 py-1 rounded mr-2">
+                                    Update
+                                </button>
+                            </Link>
                         </div>
                     ))}
                 </div>
@@ -95,7 +97,15 @@ const Tasks = () => {
                     {tasks.filter(task => task.category === "Done").map(task => (
                         <div key={task._id} className="bg-white p-4 rounded-lg shadow-md mb-3 border border-green-200 hover:shadow-xl transition">
                             <h3 className="font-semibold text-green-800 text-lg">{task.title}</h3>
-                            <p className="text-gray-600 text-sm">{task.description}</p>
+                            <p className="text-gray-600 text-sm mb-2">{task.description}</p>
+                            <button onClick={() => handleDelete(task._id)} className="bg-red-500 text-white px-3 py-1 rounded mr-2">
+                                Delete
+                            </button>
+                            <Link to={`/tasks/update/${task._id}`}>
+                                <button className="bg-blue-500 text-white px-3 py-1 rounded mr-2">
+                                    Update
+                                </button>
+                            </Link>
                         </div>
                     ))}
                 </div>
