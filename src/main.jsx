@@ -13,6 +13,7 @@ import AuthProvider from './provider/AuthProvider';
 import Tasks from './components/Tasks';
 import AddTaskForm from './components/AddTaskForm';
 import TasksUpdate from './components/TasksUpdate';
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const router = createBrowserRouter([
   {
@@ -43,12 +44,15 @@ const router = createBrowserRouter([
   },
 ]);
 
-createRoot(document.getElementById('root')).render(
+const queryClient = new QueryClient();
+
+
+createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <div className='bg-gray-10'>
+    <QueryClientProvider client={queryClient}>
       <AuthProvider>
-        <RouterProvider router={router} ></RouterProvider>
+        <RouterProvider router={router} />
       </AuthProvider>
-    </div>
-  </StrictMode>,
-)
+    </QueryClientProvider>
+  </StrictMode>
+);
