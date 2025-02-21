@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
+import Swal from "sweetalert2";
 
 const AddTaskForm = () => {
   const [title, setTitle] = useState("");
@@ -19,7 +20,13 @@ const AddTaskForm = () => {
 
     axios.post("https://task-management-server-two-rho.vercel.app/tasks", newTask).then((res) => {
       if (res.data.insertedId) {
-        alert("Task added successfully");
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Your work has been saved",
+          showConfirmButton: false,
+          timer: 1500
+        });
         setTitle("");
         setDescription("");
         setCategory("To-Do");
@@ -31,7 +38,7 @@ const AddTaskForm = () => {
     <div className="max-w-lg mx-auto bg-white shadow-lg rounded-lg p-6 my-10">
       <h2 className="text-2xl font-semibold text-center text-gray-800 mb-4">📝 Add New Task</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
-        
+
         {/* Title Field */}
         <div>
           <label className="block font-medium text-gray-700">Title</label>

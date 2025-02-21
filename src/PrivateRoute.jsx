@@ -9,7 +9,7 @@ const PrivateRoute = ({ children }) => {
         return <span className="loading loading-ball loading-lg"></span>
     }
     if (!user) {
-        return <Navigate to='/login' state={location.pathname}></Navigate>
+        return <Navigate to='/login' state={{ from: location }} />;
     }
     return children
 };
