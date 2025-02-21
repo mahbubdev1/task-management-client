@@ -17,7 +17,7 @@ const AddTaskForm = () => {
       category,
     };
 
-    axios.post("http://localhost:5000/tasks", newTask).then((res) => {
+    axios.post("https://task-management-server-two-rho.vercel.app/tasks", newTask).then((res) => {
       if (res.data.insertedId) {
         alert("Task added successfully");
         setTitle("");

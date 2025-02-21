@@ -2,20 +2,31 @@ import { useContext } from "react";
 import { AuthContext } from "../provider/AuthProvider";
 import axios from "axios";
 import { FaGoogle } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const Login = () => {
     const { googleLogin } = useContext(AuthContext);
+    const navigate = useNavigate();
 
     const handleGoogleLogin = () => {
         googleLogin()
             .then(result => {
+                navigate('/')
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: "Your work has been saved",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
                 const user = result.user;
                 const userInfo = {
                     userId: user?.uid,
                     name: user?.displayName,
                     email: user?.email
                 }
-                axios.post('http://localhost:5000/users', userInfo)
+                axios.post('https://task-management-server-two-rho.vercel.app/users', userInfo)
                     .then(res => {
                         console.log("User saved:", res.data);
                     })

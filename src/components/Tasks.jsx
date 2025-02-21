@@ -12,7 +12,7 @@ const Tasks = () => {
     const { data: tasks = [], refetch } = useQuery({
         queryKey: ["tasks"],
         queryFn: async () => {
-            const res = await axios.get("http://localhost:5000/tasks");
+            const res = await axios.get("https://task-management-server-two-rho.vercel.app/tasks");
             return res.data;
         },
     });
@@ -38,7 +38,7 @@ const Tasks = () => {
             confirmButtonText: "Yes, delete it!",
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.delete(`http://localhost:5000/tasks/${taskId}`)
+                axios.delete(`https://task-management-server-two-rho.vercel.app/tasks/${taskId}`)
                     .then((res) => {
                         refetch();
                         if (res.data.deletedCount > 0) {
@@ -77,7 +77,7 @@ const Tasks = () => {
             setLocalTasks([...otherTasks, ...sourceTasks, ...destinationTasks]);
 
             try {
-                await axios.put(`http://localhost:5000/tasks/${draggableId}`, {
+                await axios.put(`https://task-management-server-two-rho.vercel.app/tasks/${draggableId}`, {
                     category: destination.droppableId,
                 });
                 refetch();
@@ -99,7 +99,7 @@ const Tasks = () => {
                 <FaTasks /> All Tasks
             </h2>
             <DragDropContext onDragEnd={onDragEnd}>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     {categories.map((column) => (
                         <Droppable key={column.name} droppableId={column.name}>
                             {(provided) => (

@@ -14,6 +14,7 @@ import Tasks from './components/Tasks';
 import AddTaskForm from './components/AddTaskForm';
 import TasksUpdate from './components/TasksUpdate';
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import PrivateRoute from './PrivateRoute';
 
 const router = createBrowserRouter([
   {
@@ -30,15 +31,15 @@ const router = createBrowserRouter([
       },
       {
         path: '/tasks',
-        element: <Tasks></Tasks>
+        element: <PrivateRoute><Tasks></Tasks></PrivateRoute>
       },
       {
         path: '/tasks/update/:id',
-        element: <TasksUpdate></TasksUpdate>
+        element: <PrivateRoute><TasksUpdate></TasksUpdate></PrivateRoute>
       },
       {
         path: '/addTask',
-        element: <AddTaskForm></AddTaskForm>
+        element: <PrivateRoute><AddTaskForm></AddTaskForm></PrivateRoute>
       },
     ]
   },
