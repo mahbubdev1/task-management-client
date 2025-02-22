@@ -8,6 +8,8 @@ import { FaEdit, FaTasks, FaTrash } from "react-icons/fa";
 
 const Tasks = () => {
     const navigate = useNavigate();
+    const [theme, setTheme] = useState();
+    console.log(theme);
 
     const { data: tasks = [], refetch } = useQuery({
         queryKey: ["tasks"],
@@ -20,6 +22,7 @@ const Tasks = () => {
     const [localTasks, setLocalTasks] = useState([]);
 
     useEffect(() => {
+        setTheme(localStorage.getItem('theme'));
         setLocalTasks(tasks);
     }, [tasks]);
 
@@ -94,7 +97,7 @@ const Tasks = () => {
     ];
 
     return (
-        <div className="container mx-auto">
+        <div className={`container mx-auto`}>
             <h2 className="text-3xl font-bold mt-4 mb-6 text-center flex items-center justify-center gap-2">
                 <FaTasks /> All Tasks
             </h2>
