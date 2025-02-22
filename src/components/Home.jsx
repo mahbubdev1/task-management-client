@@ -1,9 +1,8 @@
-
-
+import taskManagement from '../assets/task-management-system.png'
 const Home = () => {
     return (
         <div>
-            Home
+            <img className='min-w-full' src={taskManagement} alt="" />
         </div>
     );
 };

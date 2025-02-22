@@ -1,20 +1,22 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { FaEdit, FaTasks, FaTrash } from "react-icons/fa";
+import { AuthContext } from "../provider/AuthProvider";
 
 const Tasks = () => {
+    const {user} = useContext(AuthContext);
     const navigate = useNavigate();
     const [theme, setTheme] = useState();
     console.log(theme);
 
     const { data: tasks = [], refetch } = useQuery({
-        queryKey: ["tasks"],
+        queryKey: ["tasks", user?.email],
         queryFn: async () => {
-            const res = await axios.get("https://task-management-server-two-rho.vercel.app/tasks");
+            const res = await axios.get(`http://localhost:5000/tasks/${user?.email}`);
             return res.data;
         },
     });
@@ -41,7 +43,7 @@ const Tasks = () => {
             confirmButtonText: "Yes, delete it!",
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.delete(`https://task-management-server-two-rho.vercel.app/tasks/${taskId}`)
+                axios.delete(`http://localhost:5000/tasks/${taskId}`)
                     .then((res) => {
                         refetch();
                         if (res.data.deletedCount > 0) {
@@ -80,7 +82,7 @@ const Tasks = () => {
             setLocalTasks([...otherTasks, ...sourceTasks, ...destinationTasks]);
 
             try {
-                await axios.put(`https://task-management-server-two-rho.vercel.app/tasks/${draggableId}`, {
+                await axios.put(`http://localhost:5000/tasks/${draggableId}`, {
                     category: destination.droppableId,
                 });
                 refetch();

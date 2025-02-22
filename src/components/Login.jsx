@@ -26,7 +26,7 @@ const Login = () => {
                     name: user?.displayName,
                     email: user?.email
                 }
-                axios.post('https://task-management-server-two-rho.vercel.app/users', userInfo)
+                axios.post('http://localhost:5000/users', userInfo)
                     .then(res => {
                         console.log("User saved:", res.data);
                     })

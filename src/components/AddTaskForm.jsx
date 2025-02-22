@@ -1,8 +1,10 @@
 import axios from "axios";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Swal from "sweetalert2";
+import { AuthContext } from "../provider/AuthProvider";
 
 const AddTaskForm = () => {
+  const {user} = useContext(AuthContext);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("To-Do");
@@ -12,13 +14,14 @@ const AddTaskForm = () => {
     if (!title) return;
 
     const newTask = {
+      email: user?.email,
       title,
       description,
       timestamp: new Date().toISOString(),
       category,
     };
 
-    axios.post("https://task-management-server-two-rho.vercel.app/tasks", newTask).then((res) => {
+    axios.post("http://localhost:5000/tasks", newTask).then((res) => {
       if (res.data.insertedId) {
         Swal.fire({
           position: "top-end",

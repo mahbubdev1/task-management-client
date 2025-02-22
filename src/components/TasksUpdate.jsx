@@ -12,7 +12,7 @@ const TasksUpdate = () => {
     const [category, setCategory] = useState("To-Do");
 
     useEffect(() => {
-        axios.get(`https://task-management-server-two-rho.vercel.app/task/${id}`)
+        axios.get(`http://localhost:5000/task/${id}`)
             .then(result => {
                 const taskData = result.data;
                 setTitle(taskData.title || "");
@@ -32,7 +32,7 @@ const TasksUpdate = () => {
             category,
         };
 
-        axios.put(`https://task-management-server-two-rho.vercel.app/tasks/${id}`, updateData)
+        axios.put(`http://localhost:5000/tasks/${id}`, updateData)
             .then(() => {
                 // console.log(result);
                 Swal.fire({
